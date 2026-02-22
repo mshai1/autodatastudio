@@ -42,7 +42,7 @@ export default function Home() {
 
         <main className="flex-1 w-full flex justify-center px-4 py-16">
           <div className="w-full max-w-4xl">
-
+          <div className="bg-white shadow-xl rounded-xl p-6 sm:p-8">
             <div className="mb-12 text-center">
               <h1 className="text-3xl font-semibold text-slate-800">
                 Explore and Export Vehicle Models by Make & Year
@@ -89,6 +89,7 @@ export default function Home() {
                 </p>
               </div>
             )}
+            </div>
 
             <div className="mt-20 pt-10 border-t border-slate-200 text-center">
               <p className="text-sm text-slate-400 uppercase tracking-wide">
