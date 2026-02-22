@@ -20,18 +20,19 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [viewMode, setViewMode] = useState<"json"|"csv">("json");
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => { async function fetchMakes() { const res = await fetch("api/makes"); const json = await res.json(); setMakes(json); }fetchMakes(); }, []);
 
   async function fetchData() {
     if (!selectedMake || !year) {setError("Select make and year"); return; }
-    setError(""); setLoading(true);
+    setError(""); setLoading(true); setHasFetched(true);
     try {
       const res = await fetch(`api/vehicles?make=${selectedMake}&year=${year}`);
       if (!res.ok) throw new Error("Failed");
       const json = await res.json();
       setData(json);
-    } catch { setError("Something went worng."); } finally { setLoading(false);}
+    } catch { setError("Something went worng."); setData([]); } finally { setLoading(false);}
   }
 
   return (
@@ -68,17 +69,6 @@ export default function Home() {
             </button>
             {loading && <LoadingSkeletion />}
             {error && <p className="text-red-500">{error}</p>}
-
-            {!loading && data.length === 0 && selectedMake && year && (
-              <div className="mt-8 border border-slate-200 rounded-lg bg-white p-8 text-center shadow-sm">
-                <p className="text-slate-700 font-medium">
-                  No vehicle models found.
-                </p>
-                <p className="mt-2 text-sm text-slate-500">
-                  Try a different year or make combination.
-                </p>
-              </div>
-            )}
             
             {data.length>0 && <>
               <div className="animate-fadeIn">
@@ -88,6 +78,17 @@ export default function Home() {
                 <DownloadButtons data={data} selectedMake={selectedMake} year={year}/>
               </div>
             </>}
+
+            {!loading && hasFetched && data.length === 0 && selectedMake && year && (
+              <div className="mt-8 border border-slate-200 rounded-lg bg-white p-8 text-center shadow-sm">
+                <p className="text-slate-700 font-medium">
+                  No vehicle models found.
+                </p>
+                <p className="mt-2 text-sm text-slate-500">
+                  Try a different year or make combination.
+                </p>
+              </div>
+            )}
 
             <div className="mt-20 pt-10 border-t border-slate-200 text-center">
               <p className="text-sm text-slate-400 uppercase tracking-wide">
