@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 backdrop-blur bg-white/80 border-b border-slate-200">
+    <header className="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-slate-200 shadow-sm">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-2">
