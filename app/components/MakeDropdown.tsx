@@ -109,7 +109,7 @@ export default function MakeDropdown({ makes, selectedMake, setSelectedMake }: P
             )}
 
             {isOpen && (
-                <div className="absolute w-full bg-white border border-slate-300 rounded mt-1 max-h-60 overflow-y-auto shadow-lg z-20">
+                <div className="absolute z-20 w-full mt-1 max-h-60 overflow-y-auto border border-slate-300 rounded bg-white shadow-lg">
                     {filteredMakes.length === 0 && (
                         <div className="absolute z-20 w-full mt-1 p-2 border border-slate-300 rounded bg-white text-slate-500">No results</div>
                     )}
@@ -118,7 +118,7 @@ export default function MakeDropdown({ makes, selectedMake, setSelectedMake }: P
                         <div
                             key={m.MakeId}
                             onClick={()=> {setSelectedMake(m.MakeName); setMakeSearch(m.MakeName); setIsOpen(false); }}
-                            className={`p-2 cursor-pointer ${idx === highlightIndex ? "bg-blue-100": "hover:bg-gray-100"}`}
+                            className={`p-2 text-slate-800 cursor-pointer ${idx === highlightIndex ? "bg-blue-100": "hover:bg-gray-100"}`}
                         >
                             {m.MakeName}
                         </div>
