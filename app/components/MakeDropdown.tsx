@@ -63,7 +63,7 @@ export default function MakeDropdown({ makes, selectedMake, setSelectedMake }: P
 
     return (
         <div className="mb-6 relative" ref={dropdownRef}>
-            <label className="block mb-1 font-medium">Search Make</label>
+            <label className="block mb-1 font-medium text-slate-800 text-sm">Search Make</label>
             <input
                 ref={inputRef}
                 type="text"
@@ -72,7 +72,8 @@ export default function MakeDropdown({ makes, selectedMake, setSelectedMake }: P
                 onChange={(e) => { setMakeSearch(e.target.value); }}
                 onKeyDown={handleKeyDown}
                 placeholder="Type to Search..."
-                className="border p-2 rounded w-full"
+                className="w-full border border-slate-300 bg-white rounded p-2 text-slate-800 placeholder:text-slate-400
+                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
 
             {/* Clear Icon */}
@@ -108,9 +109,9 @@ export default function MakeDropdown({ makes, selectedMake, setSelectedMake }: P
             )}
 
             {isOpen && (
-                <div className="absolute w-full bg-white border rounded mt-1 max-h-60 overflow-y-auto shadow-lg z-20">
+                <div className="absolute w-full bg-white border border-slate-300 rounded mt-1 max-h-60 overflow-y-auto shadow-lg z-20">
                     {filteredMakes.length === 0 && (
-                        <div className="p-2 text-slate-500">No results</div>
+                        <div className="absolute z-20 w-full mt-1 p-2 border border-slate-300 rounded bg-white text-slate-500">No results</div>
                     )}
                     
                     {filteredMakes.map((m, idx) => (
