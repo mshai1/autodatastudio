@@ -28,6 +28,13 @@ export default function VinPage() {
 
         try {
             const res = await fetch(`/api/vin?vin=${vin}`);
+
+            if(res.status === 429) {
+                const data = await res.json();
+                setError(`You're going a bit fast 🚀 — please try again in ${data.retryAfter}s.`);
+                return;
+            }
+
             if(!res.ok) throw new Error("Failed");
 
             const json = await res.json();

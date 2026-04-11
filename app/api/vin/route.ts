@@ -1,6 +1,22 @@
-import { NextResponse } from "next/server";
+import { rateLimit } from "@/lib/rateLimiter";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
+
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
+
+    const limit = rateLimit(ip);
+
+    if(!limit.success) {
+        return NextResponse.json(
+            {
+                error: "Too many requests. Please slow down.",
+                retryAfter: Math.ceil(limit.remainingTime / 1000),
+            },
+            { status: 429 }
+        );
+    }
+
     const { searchParams } = new URL(req.url);
     const vin = searchParams.get("vin");
 

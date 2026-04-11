@@ -5,11 +5,16 @@ import { jsonToCSV } from "@/lib/csv";
 import { cache } from "react";
 
 export async function GET(req: NextRequest) {
-    const ip = req.headers.get("x-forwarded-for") || "unknown";
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
 
-    if(!rateLimit(ip)) {
+    const limit = rateLimit(ip);
+
+    if(!limit.success) {
         return NextResponse.json(
-            { error: "Too many requests" },
+            {
+                error: "Too many requests. Please slow down.",
+                retryAfter: Math.ceil(limit.remainingTime / 1000),
+            },
             { status: 429 }
         );
     }

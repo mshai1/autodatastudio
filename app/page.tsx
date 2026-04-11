@@ -29,6 +29,11 @@ export default function Home() {
     setError(""); setLoading(true); setHasFetched(true);
     try {
       const res = await fetch(`api/vehicles?make=${selectedMake}&year=${year}`);
+      if (res.status === 429) {
+        const data = await res.json();
+        setError(`You're going a bit fast 🚀 — please try again in ${data.retryAfter}s.`);
+        return;
+      }
       if (!res.ok) throw new Error("Failed");
       const json = await res.json();
       setData(json);

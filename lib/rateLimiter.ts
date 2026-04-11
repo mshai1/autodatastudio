@@ -3,25 +3,35 @@ import { timeStamp } from "console";
 const requests = new Map<string, { count:number; timestamp: number}>();
 
 const WINDOWS_SIZE = 60*1000; //1 minute
-const MAX_REQUESTS = 30;
+const MAX_REQUESTS = 5;
 
-export function rateLimit(ip:string) {
+type RateLimitResult = 
+    | {success: true}
+    | {success: false; remainingTime: number};
+
+export function rateLimit(ip:string): RateLimitResult {
     const now = Date.now();
     const record = requests.get(ip);
 
     if(!record) {
         requests.set(ip, { count:1, timestamp: now});
-        return true;
+        return { success:true };
     }
 
     if (now - record.timestamp > WINDOWS_SIZE) {
         requests.set(ip, { count:1, timestamp: now});
+        return { success:true };
     }
 
-    if(record.count >= MAX_REQUESTS) {
-        return false;
-    }
-
+    //Increment count
     record.count += 1;
-    return true;
+
+    if(record.count > MAX_REQUESTS) {
+        return {
+            success: false,
+            remainingTime: WINDOWS_SIZE - (now - record.timestamp),
+        };
+    }
+
+    return { success:true };
 }
