@@ -21,6 +21,12 @@ export default function Navbar() {
         {/* Right Side */}
         <div className="flex items-center gap-6 text-sm">
           <a
+            href="/vin"
+            className="text-slate-600 hover:text-blue-600 transition"
+          >
+            VIN Decoder
+          </a>
+          <a
             href="mailto:devshaimail.com?subject=AutoData Studio Feedback"
             className="text-slate-600 hover:text-blue-600 transition"
           >

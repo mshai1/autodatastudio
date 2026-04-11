@@ -97,7 +97,7 @@ export default function Home() {
               </p>
 
               <p className="mt-2 text-slate-500 text-sm">
-                VIN Decoder · Advanced Filtering · Bulk Export
+                Advanced Filtering · Bulk Export
               </p>
             </div>
           </div>
