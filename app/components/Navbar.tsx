@@ -21,6 +21,12 @@ export default function Navbar() {
         {/* Right Side */}
         <div className="flex items-center gap-6 text-sm">
           <a
+            href="/"
+            className="text-slate-600 hover:text-blue-600 transition"
+          >
+            Home
+          </a>
+          <a
             href="/vin"
             className="text-slate-600 hover:text-blue-600 transition"
           >
